@@ -1,6 +1,8 @@
+import pytest
+
 from models.product import Product
 from models.category import Category
-
+from  models.category_iterator import CategoryIterator
 def test_product_init():
     product = Product("iphone 15", "512GB", 120000.500, 5)
 
@@ -108,3 +110,33 @@ def test_product_add():
     product1 = Product("iphone", "512GB", 100, 10)
     product2 = Product("iphone2", "512GB", 200, 2)
     assert product1 + product2 == 1400
+
+def test_category_iterator():
+    product1 = Product("iphone", "Телефон", 100000, 5)
+    product2 = Product("Samsung", "Телефон", 80000, 3)
+
+    category = Category("Смартфоны", "Описание", [product1, product2])
+    iterator = CategoryIterator(category)
+    assert next(iterator) == product1
+    assert next(iterator) == product2
+
+
+def test_category_iterator_stop():
+    product = Product("iphone", "Телефон", 100000, 5)
+    category = Category("Смартфоны", "Описание", [product])
+    iterator = CategoryIterator(category)
+    next(iterator)
+    with pytest.raises(StopIteration):
+        next(iterator)
+
+def test_category_iterator_for():
+    product1 = Product("iphone", "Телефон", 100000, 5)
+    product2 = Product("Samsung", "Телефон", 80000, 3)
+
+    category = Category("Смартфоны", "Описание", [product1, product2])
+    iterator = CategoryIterator(category)
+    result = []
+    for product in iterator:
+        result.append(product.name)
+
+    assert result == ["iphone", "Samsung"]
