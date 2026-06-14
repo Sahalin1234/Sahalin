@@ -23,7 +23,6 @@ class Product:
 
         self.__prise = new_prise
 
-
     @classmethod
     def create_product(cls, name, description, prise, quantity, products_list = None):
         if products_list:
@@ -33,3 +32,14 @@ class Product:
                     product.prise = max(product.prise, prise)
                     return product
         return cls(name,  description, prise, quantity)
+
+    def __str__(self):
+        return f"{self.name}, {self.prise} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты Product")
+        return self.prise * self.quantity + other.prise * other.quantity
+
+    
+

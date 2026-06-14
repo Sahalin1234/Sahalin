@@ -2,8 +2,7 @@ from itertools import product
 from models.product import Product
 from models.category import Category
 
-product = Product("iphone", "512GB", 120000.500, 7, )
+product1= Product("iphone", "512GB", 100, 10 )
+product2 = Product("iphone2", "512GB", 200, 2)
 
-product.prise = 40000
-#p2 = Product.create_product("iphone", "512GB", 170000, 9, products)
-
+print(product1 + product2)

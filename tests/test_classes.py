@@ -94,3 +94,17 @@ def test_prise_decrease_cancel(monkeypatch):
     monkeypatch.setattr("builtins.input", lambda _: "n")
     product.prise = 40000
     assert product.prise == 50000
+
+def test_product_str():
+    product = Product("iphone", "Телефон", 100000, 5)
+    assert str(product) == "iphone, 100000 руб. Остаток: 5 шт."
+
+def test_category_str():
+    product = Product("iphone", "Телефон", 100000, 5)
+    category = Category("Смартфоны", "Описание", [product])
+    assert str(category) == "Смартфоны, количество продуктов: 5 шт."
+
+def test_product_add():
+    product1 = Product("iphone", "512GB", 100, 10)
+    product2 = Product("iphone2", "512GB", 200, 2)
+    assert product1 + product2 == 1400
