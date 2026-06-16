@@ -10,6 +10,8 @@ class Category:
         Category.product_count += len(products)
 
     def add_product(self, product):
+        if not isinstance(product, Product):
+            raise TypeError("Можно добовлять только объекты Product")
         self.__products.append(product)
 
     @property

@@ -179,3 +179,15 @@ def test_add_same_slasses():
     assert phone2 + phone1 == 740000
 
 
+def test_add_wrong_object():
+    category = Category("Смартфоны", "Описание", [])
+    with pytest.raises(TypeError):
+        category.add_product("не товар")
+
+
+def test_add_smartphone():
+    category = Category("Смартфоны", "Описание", [])
+    phone = Smartphone("iphone", "Телефон", 100000, 5, "Высокая", "15 Pro", 256, "Черный")
+    category.add_product(phone)
+    assert phone in category._Category__products
+
