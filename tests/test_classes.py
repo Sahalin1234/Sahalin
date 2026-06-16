@@ -1,8 +1,12 @@
 import pytest
 
+from models.lawn_grass import LawnGrass
 from models.product import Product
 from models.category import Category
 from  models.category_iterator import CategoryIterator
+from models.smartphone import Smartphone
+
+
 def test_product_init():
     product = Product("iphone 15", "512GB", 120000.500, 5)
 
@@ -130,6 +134,7 @@ def test_category_iterator_stop():
         next(iterator)
 
 def test_category_iterator_for():
+
     product1 = Product("iphone", "Телефон", 100000, 5)
     product2 = Product("Samsung", "Телефон", 80000, 3)
 
@@ -140,3 +145,37 @@ def test_category_iterator_for():
         result.append(product.name)
 
     assert result == ["iphone", "Samsung"]
+
+
+def test_smartphone_init():
+    phone = Smartphone("iphone", "Смартфон", 120000, 5, "A17", "15 Pro", 256, "Черный")
+
+    assert phone.name == "iphone"
+    assert phone.prise == 120000
+    assert phone.quantity == 5
+    assert phone.model == "15 Pro"
+
+
+def test_lawn_grass_init():
+    grass = LawnGrass("Газон","Зеленая трава", 500, 20, "Россия", "10 дней", "Зеленый")
+
+    assert grass.name == "Газон"
+    assert grass.country == "Россия"
+    assert grass.germination_period == ("10 дней")
+
+
+def test_add_different_classes():
+    product = Product("Товары", "Описание", 100, 10)
+    phone = Smartphone("iphone", "Телефон", 100000, 5, "Высокая", "15 Pro", 256, "Черный")
+
+    with pytest.raises(TypeError):
+        product + phone
+
+
+def test_add_same_slasses():
+    phone1 = Smartphone("iphone", "Телефон", 100000, 5, "Высокая", "15 Pro", 256, "Черный")
+    phone2 = Smartphone("Samsung", "Телефон", 80000, 3, "Высокая", "S24", 256, "Белый")
+
+    assert phone2 + phone1 == 740000
+
+

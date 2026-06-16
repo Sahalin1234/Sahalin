@@ -1,6 +1,5 @@
 from itertools import product
 
-
 class CategoryIterator:
     def __init__(self, category):
         self.products = category.get_products()
@@ -15,3 +14,4 @@ class CategoryIterator:
             self.index += 1
             return product
         raise StopIteration
+
