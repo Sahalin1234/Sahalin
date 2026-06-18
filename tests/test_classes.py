@@ -1,5 +1,6 @@
 import pytest
 
+from models.base_product import BaseProduct
 from models.lawn_grass import LawnGrass
 from models.product import Product
 from models.category import Category
@@ -154,6 +155,12 @@ def test_smartphone_init():
     assert phone.prise == 120000
     assert phone.quantity == 5
     assert phone.model == "15 Pro"
+    assert phone.memory == 256
+
+    assert isinstance(phone, Product)
+    assert isinstance(phone, BaseProduct)
+    assert issubclass(Smartphone, Product)
+    assert issubclass(Product, BaseProduct)
 
 
 def test_lawn_grass_init():
@@ -161,7 +168,13 @@ def test_lawn_grass_init():
 
     assert grass.name == "Газон"
     assert grass.country == "Россия"
-    assert grass.germination_period == ("10 дней")
+    assert grass.germination_period == "10 дней"
+    assert grass.color == "Зеленый"
+
+    assert isinstance(grass, Product)
+    assert isinstance(grass, BaseProduct)
+    assert issubclass(LawnGrass, Product)
+    assert issubclass(Product, BaseProduct)
 
 
 def test_add_different_classes():
@@ -191,3 +204,25 @@ def test_add_smartphone():
     category.add_product(phone)
     assert phone in category._Category__products
 
+
+def test_add_product_to_category():
+    category = Category("Смартфоны", "Описание", [])
+    product = Product("iphone", "Телефон", 100000, 5)
+    category.add_product(product)
+
+    assert product in category._Category__products
+
+
+def test_smartphone_is_product():
+    phone = Smartphone("iphone", "Телефон", 100000, 5, "Высокая", "15 Pro", 256, "Черный")
+    assert isinstance(phone, Product)
+
+
+def test_grass_is_priduct():
+    grass = LawnGrass("Газон", "Зеленая трава", 500, 20, "Россия", "10 дней", "Зеленый")
+    assert isinstance(grass, Product)
+
+
+def test_repr_product():
+    product = Product("iphone", "Телефон", 100000, 5)
+    assert repr(product) == "Product('iphone', 'Телефон', 100000, 5)"

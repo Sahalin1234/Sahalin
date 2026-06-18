@@ -7,3 +7,5 @@ class LawnGrass(Product):
         self.germination_period = germination_period
         self.color = color
 
+        print(repr(self))
+

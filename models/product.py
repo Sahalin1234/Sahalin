@@ -1,9 +1,15 @@
-class Product:
+from models.base_product import BaseProduct
+from models.repr_mixin import ReprMixin
+
+
+class Product(ReprMixin, BaseProduct):
     def __init__(self, name: str, description: str, prise: float, quantity: int):
         self.name = name
         self.description = description
         self.__prise = prise
         self.quantity = quantity
+
+        print(repr(self))
 
 
     @property
