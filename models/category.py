@@ -1,13 +1,19 @@
+from models.base_entity import BaseEntity
 from models.product import Product
-class Category:
+class Category(BaseEntity):
+
     category_count = 0
     product_count = 0
     def __init__(self, name: str, description: str, products:list):
-        self.name = name
+        self.__name = name
         self.description = description
         self.__products = products
         Category.category_count += 1
         Category.product_count += len(products)
+
+    @property
+    def name(self):
+       return self.__name
 
     def add_product(self, product):
         if not isinstance(product, Product):
@@ -35,3 +41,4 @@ class Category:
 
     def get_products(self):
         return self.__products
+

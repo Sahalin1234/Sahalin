@@ -1,12 +1,13 @@
 import pytest
 
+from models.base_entity import BaseEntity
 from models.base_product import BaseProduct
 from models.lawn_grass import LawnGrass
 from models.product import Product
 from models.category import Category
-from  models.category_iterator import CategoryIterator
+from models.category_iterator import CategoryIterator
 from models.smartphone import Smartphone
-
+from models.order import Order
 
 def test_product_init():
     product = Product("iphone 15", "512GB", 120000.500, 5)
@@ -23,6 +24,8 @@ def test_category_init():
     assert category.name == "Смартфоны"
     assert category.description == "Описание"
     assert category.products == "iphone, 100000 руб. Остаток: 5 шт."
+
+    assert isinstance(category, BaseEntity)
 
 def test_category_count():
     Category.category_count = 0
@@ -226,3 +229,14 @@ def test_grass_is_priduct():
 def test_repr_product():
     product = Product("iphone", "Телефон", 100000, 5)
     assert repr(product) == "Product('iphone', 'Телефон', 100000, 5)"
+
+
+def test_order_init():
+    phone = Smartphone("iphone", "Телефон", 100000, 5, 120, "15 Pro", 256, "Черный")
+
+    order = Order(phone, 2)
+
+    assert order.product == phone
+    assert order.quantity == 2
+    assert order.total_price == 200000
+    assert isinstance(order, BaseEntity)
