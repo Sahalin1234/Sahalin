@@ -240,3 +240,15 @@ def test_order_init():
     assert order.quantity == 2
     assert order.total_price == 200000
     assert isinstance(order, BaseEntity)
+
+
+def test_add_product_zero_quantity():
+    category = Category("Смартфоны", "Описание", [])
+    product = Product("Тестовый товар", "Описание", 100, 0,)
+    with pytest.raises(ValueError):
+        category.add_product(product)
+
+
+def test_average_price_empty_category():
+    category = Category("Пустая категория", "Описание", [])
+    assert category.average_prise == 0
