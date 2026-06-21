@@ -245,8 +245,9 @@ def test_order_init():
 def test_add_product_zero_quantity():
     category = Category("Смартфоны", "Описание", [])
     product = Product("Тестовый товар", "Описание", 100, 0,)
-    with pytest.raises(ValueError):
-        category.add_product(product)
+    category.add_product(product)
+
+    assert len(category.products) == 0
 
 
 def test_average_price_empty_category():

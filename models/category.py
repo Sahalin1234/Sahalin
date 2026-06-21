@@ -1,6 +1,7 @@
 from itertools import product
 
 from models.base_entity import BaseEntity
+from models.expertion import ProductQuantityError
 from models.product import Product
 class Category(BaseEntity):
 
@@ -18,20 +19,26 @@ class Category(BaseEntity):
        return self.__name
 
     def add_product(self, product):
-        if not isinstance(product, Product):
-            raise TypeError("Можно добовлять только объекты Product")
-        if product.quantity == 0:
-            raise ValueError("Товар с нулевым количеством не может быть добавлен")
-        self.__products.append(product)
+        try:
+            if not isinstance(product, Product):
+                raise TypeError("Можно добовлять только объекты Product")
+            if product.quantity == 0:
+                raise ProductQuantityError("Товар с нулевым количеством не может быть добавлен")
+            self.__products.append(product)
+        except ProductQuantityError as e:
+            print(e)
+        else:
+            print("Товар успешно добавлен")
+        finally:
+            print("Обработка добавленич товара завершина")
 
     @property
     def products(self):
         products_list = []
-
         for product in self.__products:
             products_list.append(f"{product.name}, {product.prise} руб. "
                                  f"Остаток: {product.quantity} шт.")
-            return "\n".join(products_list)
+        return "\n".join(products_list)
 
     def __len__(self):
         #return sum(prod.quantity for ptod in self.__products)
